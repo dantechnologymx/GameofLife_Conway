@@ -1,28 +1,29 @@
+# frozen_string_literal: true
+
+# Represent a cell object
 class Cell
   @next_state
   @state
   attr_accessor :neighbors
 
-  def initialize( state = :dead )
+  def initialize(state = :dead)
     @state = state
     @neighbors = []
   end
 
   def alive?
-    return @state == :alive
+    @state == :alive
   end
 
   def dead?
-    return !alive?
+    !alive?
   end
 
   def define_next_state
     count = 0
     neighbors.each do |n|
-		if n.alive?
-			count += 1 
-		end
-	end
+      count += 1 if n.alive?
+    end
     rules(count)
   end
 
@@ -31,16 +32,16 @@ class Cell
   end
 
   def rules(count)
-	#Any living cell with more than three live neighbours dies
-	#Any living cell with two or three live neighbours lives on to the next generation.
-	#Any living cell with fewer than two live neighbours dies
-	#Any dead cell with exactly three live neighbours becomes a live cell.
-    if count == 3
-      @next_state = :alive
-    elsif count == 2 && @state == :alive
-      @next_state = :alive
-    else
-      @next_state = :dead
-    end
+    # Any living cell with more than three live neighbours dies
+    # Any living cell with two or three live neighbours lives on next generation
+    # Any living cell with fewer than two live neighbours dies
+    # Any dead cell with exactly three live neighbours becomes a live cell.
+    @next_state = if count == 3
+                    :alive
+                  elsif count == 2 && @state == :alive
+                    :alive
+                  else
+                    :dead
+                  end
   end
 end

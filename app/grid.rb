@@ -1,61 +1,63 @@
-require_relative "generations"
-require_relative "cell"
+# frozen_string_literal: true
 
+require_relative 'generations'
+require_relative 'cell'
+
+# Represent a grid object
 class Grid
-
   @rows
   @columns
   @game
-  
+
   def initialize(rows, columns, seed_percent)
     @rows = rows
     @columns = columns
     @game = Generations.new(rows, columns, seed_percent)
   end
-  
+
   def play
-    begin
-      draw 
+    loop do
+      draw
       @game.next_generation
       sleep(1)
-    end while true
+    end
   end
-  
+
   def draw_top
-    print "╔"
+    print "\xE2\x95\x94"
     (1..@columns).each do |index|
-		if @columns == index
-			print "══╗\n"
-		else
-			print "══╦"
-		end
-	end
+      if @columns == index
+        print "══╗\n"
+      else
+        print "\xE2\x95\x90\xE2\x95\x90\xE2\x95\xA6"
+      end
+    end
   end
 
   def draw_bottom
-    print "╚"
+    print "\xE2\x95\x9A"
     (1..@columns).each do |index|
-		if @columns == index
-			print "══╝\n"
-		else
-			print "══╩"
-		end
+      if @columns == index
+        print "══╝\n"
+      else
+        print "\xE2\x95\x90\xE2\x95\x90\xE2\x95\xA9"
+      end
     end
   end
-  
+
   def draw_middle
-    print "╠"
+    print "\xE2\x95\xA0"
     (1..@columns).each do |index|
-		if @columns ==index
-			print "══╣\n"
-		else
-			print "══╬"
-		end
-	end
+      if @columns == index
+        print "══╣\n"
+      else
+        print "\xE2\x95\x90\xE2\x95\x90\xE2\x95\xAC"
+      end
+    end
   end
 
   def line
-    print "║"
+    print "\xE2\x95\x91"
   end
 
   def draw_cell(cell)
@@ -76,18 +78,14 @@ class Grid
       line
       row.each do |cell|
         draw_cell(cell)
-		line
+        line
       end
       end_line
-	  if index+1 == @rows
-		draw_bottom
-	  else
-		draw_middle
-	  end
+      if index + 1 == @rows
+        draw_bottom
+      else
+        draw_middle
+      end
     end
   end
 end
-
-
-
-
