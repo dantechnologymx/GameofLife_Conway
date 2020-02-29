@@ -9,34 +9,31 @@ RSpec.describe Cell do
   it 'live cell' do
     expect(Cell.new(:alive).alive?).to be true
   end
-  it 'more than three live neighbours dies' do
+end
+RSpec.describe 'cell_rules_for_alive_cell' do
+  before do
     @cell = Cell.new(:alive)
-    4.times { @cell.neighbors.push(Cell.new(:alive)) }
-    @cell.define_next_state
-    @cell.update_next_state
+  end
+  it 'more than three live neighbours dies' do
+    @cell = link_neighbors(4)
     expect(@cell.dead?).to be true
   end
-  it 'two live neighbours lives' do
-    @cell = Cell.new(:alive)
-    2.times { @cell.neighbors.push(Cell.new(:alive)) }
-    @cell.define_next_state
-    @cell.update_next_state
-    expect(@cell.alive?).to be true
-  end
-  it 'three live neighbours lives' do
-    @cell = Cell.new(:alive)
-    3.times { @cell.neighbors.push(Cell.new(:alive)) }
-    @cell.define_next_state
-    @cell.update_next_state
+  it 'two or three live neighbours lives' do
+    @cell = link_neighbors(2)
     expect(@cell.alive?).to be true
   end
   it 'fewer than two live neighbours dies' do
-    @cell = Cell.new(:alive)
-    @cell.neighbors.push(Cell.new(:alive))
-    @cell.define_next_state
-    @cell.update_next_state
+    @cell = link_neighbors(1)
     expect(@cell.dead?).to be true
   end
+  def link_neighbors(number)
+    number.times { @cell.neighbors.push(Cell.new(:alive)) }
+    @cell.define_next_state
+    @cell.update_next_state
+    @cell
+  end
+end
+RSpec.describe 'cell_rules_for_dead_cell' do
   it 'exactly three live neighbours becomes a live cell' do
     @cell = Cell.new
     3.times { @cell.neighbors.push(Cell.new(:alive)) }

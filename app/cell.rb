@@ -21,8 +21,8 @@ class Cell
 
   def define_next_state
     count = 0
-    neighbors.each do |n|
-      count += 1 if n.alive?
+    neighbors.each do |cell|
+      count += 1 if cell.alive?
     end
     rules(count)
   end

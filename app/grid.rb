@@ -25,8 +25,9 @@ class Grid
 
   def draw_top
     print "\xE2\x95\x94"
-    (1..@columns).each do |index|
-      if @columns == index
+    top_columns = @columns
+    (1..top_columns).each do |index|
+      if top_columns == index
         print "══╗\n"
       else
         print "\xE2\x95\x90\xE2\x95\x90\xE2\x95\xA6"
@@ -36,8 +37,9 @@ class Grid
 
   def draw_bottom
     print "\xE2\x95\x9A"
-    (1..@columns).each do |index|
-      if @columns == index
+    bottom_columns = @columns
+    (1..bottom_columns).each do |index|
+      if bottom_columns == index
         print "══╝\n"
       else
         print "\xE2\x95\x90\xE2\x95\x90\xE2\x95\xA9"
@@ -47,8 +49,9 @@ class Grid
 
   def draw_middle
     print "\xE2\x95\xA0"
-    (1..@columns).each do |index|
-      if @columns == index
+    middle_columns = @columns
+    (1..middle_columns).each do |index|
+      if middle_columns == index
         print "══╣\n"
       else
         print "\xE2\x95\x90\xE2\x95\x90\xE2\x95\xAC"
@@ -56,31 +59,22 @@ class Grid
     end
   end
 
-  def line
+  def draw_cell(row)
     print "\xE2\x95\x91"
-  end
-
-  def draw_cell(cell)
-    if cell.alive?
-      print '▓▓'
-    else
-      print '  '
+    row.each do |cell|
+      if cell.alive?
+        print '▓▓║'
+      else
+        print '  ║'
+      end
     end
-  end
-
-  def end_line
     print "\n"
   end
 
   def draw
     draw_top
     @game.cells.each_with_index do |row, index|
-      line
-      row.each do |cell|
-        draw_cell(cell)
-        line
-      end
-      end_line
+      draw_cell(row)
       if index + 1 == @rows
         draw_bottom
       else

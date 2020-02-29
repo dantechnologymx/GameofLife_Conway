@@ -19,11 +19,10 @@ class Generations
 
   def next_generation
     @cells.each do |row|
-      row.each(&:define_next_state)
-    end
-
-    @cells.each do |row|
-      row.each(&:update_next_state)
+      row.each do |col|
+        col.define_next_state
+        col.update_next_state
+      end
     end
   end
 
@@ -44,9 +43,7 @@ class Generations
         neighbors.push(@cells[row][right]) if right < columns
         neighbors.push(@cells[bottom][left]) if bottom < rows && left >= 0
         neighbors.push(@cells[bottom][col]) if bottom < rows
-        if bottom < rows && right < columns
-          neighbors.push(@cells[bottom][right])
-        end
+        neighbors.push(@cells[bottom][right]) if bottom < rows && right < columns
       end
     end
   end
