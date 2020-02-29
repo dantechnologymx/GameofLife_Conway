@@ -31,6 +31,8 @@ class Cell
     @state = @next_state
   end
 
+  private
+
   def rules(count)
     # Any living cell with more than three live neighbours dies
     # Any living cell with two or three live neighbours lives on next generation
