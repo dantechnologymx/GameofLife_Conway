@@ -24,7 +24,7 @@ class Grid
   end
 
   def draw_top
-    print "\xE2\x95\x94"
+    print "╔"
     top_columns = @columns
     (1..top_columns).each do |index|
       if top_columns == index
@@ -36,7 +36,7 @@ class Grid
   end
 
   def draw_bottom
-    print "\xE2\x95\x9A"
+    print "╚"
     bottom_columns = @columns
     (1..bottom_columns).each do |index|
       if bottom_columns == index
@@ -48,7 +48,7 @@ class Grid
   end
 
   def draw_middle
-    print "\xE2\x95\xA0"
+    print "╠"
     middle_columns = @columns
     (1..middle_columns).each do |index|
       if middle_columns == index
